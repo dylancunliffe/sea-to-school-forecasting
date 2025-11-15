@@ -2,13 +2,12 @@
 A predictive traffic analysis system integrating embedded sensing and data modeling to forecast real-time commute durations between West Vancouver and UBC.
 
 ## Project Overview
-This project uses embedded hardware to collect traffic/commute data, processes it via custom segmentation and modelling algorithms, and produces real-time predictions of commute durations for the route between West Vancouver and the University of British Columbia (UBC).
+This project uses embedded hardware to collect traffic/commute data, processes it via custom segmentation and modelling algorithms, and produces real-time predictions of commute durations for the route between West Vancouver and the University of British Columbia.
 Key goals:
-- Deploy sensors to capture traversal times and segment data.
-- Build a segmentation map of the route (via `segments_map.html`).
+- Deploy gps sensor to capture traversal times and segment data.
+- Build a segmentation map of the route (see `segments_map.html`).
 - Develop prediction logic to estimate the remaining commute time given current position and time.
 - Create visualization tools (`visualize_segments.py`) + output files (`predictions_output.txt`, `traversals_output.txt`) for analysis.
-- Provide a project portfolio showcase for your electrical engineering / embedded systems / data-modelling skills.
 
 ## Repository Structure
 ```
@@ -32,10 +31,10 @@ Key goals:
 - Data output: plain-text files (`traversals_output.txt`, `predictions_output.txt`) for post-processing and portfolio showcase.
 
 ## Technical Details
-- Firmware written in C++ for the embedded sensing unit (`*.cpp`, `*.h`).
+- Firmware written in C for the embedded sensing unit (`*.cpp`, `*.h`).
 - Python script for visualization and auxiliary analysis.
 - Model: custom algorithm(s) implemented in `prediction.cpp`.
-- Route: West Vancouver → University of British Columbia (UBC).
+- Route: West Vancouver → University of British Columbia.
 - Data: raw GPS/time data collected along the route (in `gpsdata.txt`), used to construct model inputs and outputs.
 - Output: predicted commute durations and segment-based traversal summaries.
 
