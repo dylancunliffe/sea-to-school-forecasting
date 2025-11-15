@@ -23,7 +23,7 @@ Key goals:
 ├── segments_map.html     # Map visualization of route segments
 ├── visualize_segments.py # Python script to visualize segments
 └── README.md             # (this document)
-
+```
 ## Key Features
 - Embedded data acquisition: capturing GPS and time stamps along the route.
 - Route segmentation: dividing the commute into manageable segments for modelling and analysis.
