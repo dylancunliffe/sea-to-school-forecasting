@@ -11,6 +11,7 @@ Key goals:
 - Provide a project portfolio showcase for your electrical engineering / embedded systems / data-modelling skills.
 
 ## Repository Structure
+```
 ├── esp_data.cpp          # Embedded firmware to capture/sense data
 ├── esp_data.h            # Header definitions for firmware
 ├── gpsdata.txt           # Raw data collected from sensors
@@ -20,7 +21,7 @@ Key goals:
 ├── traversals_output.txt # Output of traversal time analysis
 ├── predictions_output.txt# Output of predicted commute durations
 ├── segments_map.html     # Map visualization of route segments
-├── visualize_segments.py # Python script to visualise segments
+├── visualize_segments.py # Python script to visualize segments
 └── README.md             # (this document)
 
 ## Key Features
