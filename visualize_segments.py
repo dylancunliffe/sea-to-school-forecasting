@@ -2,7 +2,7 @@ import folium
 import pandas as pd
 from datetime import datetime
 
-# --- Load GPS data safely ---
+# Load GPS data safely
 data = pd.read_csv(
     "gpsdata.txt",
     header=None,
@@ -16,7 +16,7 @@ data = data[pd.to_numeric(data["lat"], errors="coerce").notnull()]
 data["lat"] = data["lat"].astype(float)
 data["lon"] = data["lon"].astype(float)
 
-# Combine date + time into datetime object for gap detection
+# Combine date and time into datetime object for gap detection
 def parse_time(row):
     try:
         return datetime.strptime(f"{row['year']}-{row['month']}-{row['day']} {row['time']}", "%Y-%m-%d %H:%M:%S")
@@ -26,7 +26,7 @@ def parse_time(row):
 data["datetime"] = data.apply(parse_time, axis=1)
 data = data.dropna(subset=["datetime"]).sort_values("datetime").reset_index(drop=True)
 
-# --- Split GPS data into drives if gap > 5 minutes ---
+# Split GPS data into drives if gap > 5 minutes
 drives = []
 current_drive = [data.iloc[0]]
 for i in range(1, len(data)):
@@ -38,7 +38,7 @@ for i in range(1, len(data)):
 if current_drive:
     drives.append(current_drive)
 
-# --- Define segments (with updated 6 & 12) ---
+# Define segments
 segments = [
     {"id": 1, "name": "13th & Marine → Taylor Way", "min_lat": 49.3260, "min_lon": -123.1516, "max_lat": 49.3283, "max_lon": -123.1340},
     {"id": 2, "name": "Taylor Way → Lions Gate Bridge", "min_lat": 49.3239, "min_lon": -123.1335, "max_lat": 49.3278, "max_lon": -123.1290},
@@ -59,16 +59,16 @@ segments = [
 
 
 
-# --- Colors for segments ---
+# Colours
 colors = [
     "red", "orange", "yellow", "green", "blue", "purple",
     "cyan", "magenta", "lime", "darkred", "darkblue", "darkgreen"
 ]
 
-# --- Create map centered on route ---
+# Create map centered on route
 m = folium.Map(location=[49.28, -123.16], zoom_start=12, tiles="OpenStreetMap")
 
-# --- Add segments with hover titles only ---
+# Add segments with hover titles
 for i, s in enumerate(segments):
     color = colors[i % len(colors)]
     folium.Rectangle(
@@ -81,11 +81,12 @@ for i, s in enumerate(segments):
         tooltip=f"Segment {s['id']}: {s['name']}"
     ).add_to(m)
 
-# --- Add each drive separately to avoid long jumps ---
+# Add each drive separately to avoid long jumps
 for drive in drives:
     points = [(p["lat"], p["lon"]) for _, p in pd.DataFrame(drive).iterrows()]
     folium.PolyLine(points, color="black", weight=2.5, opacity=0.9).add_to(m)
 
-# --- Save map ---
+# Save map
 m.save("segments_map.html")
-print("✅ Map saved as 'segments_map.html' — open it in your browser.")
+print("Map saved as 'segments_map.html' — open it in your browser.")
+
