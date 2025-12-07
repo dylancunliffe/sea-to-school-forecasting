@@ -27,7 +27,7 @@ int getDayOfWeek(ValidTraversal* traversal) {
 	int J = 20; // century for 2000s
 	dayOfWeek = (day + ((13 * (adjMonth + 1)) / 5) + K + (K / 4) + (J / 4) + (5 * J)) % 7;
 
-	dayOfWeek = (dayOfWeek + 6) % 7; // Adjust to make sunday = 0, ... saturday = 6
+	dayOfWeek = (dayOfWeek + 6) % 7; // Adjust to make sunday = 0
 
 	return dayOfWeek;
 }
@@ -184,4 +184,5 @@ void predictOverallDuration(Segment* segments, ValidTraversal* traversals, int t
 
 	*routeMean = totalDuration;
 	*routeStddev = sqrt(totalVar);
+
 }
