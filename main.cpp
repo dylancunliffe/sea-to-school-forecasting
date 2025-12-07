@@ -8,11 +8,11 @@
 #include <string.h>
 
 #include <windows.h>
-#include <commdlg.h> // Common dialogs (file picker)
+#include <commdlg.h> // Common dialogs
 
 #define NUM_SEGMENTS 12
 
-// Function prototypes for file dialogs
+// Function prototypes
 int openFileDialog(char* outPath, const char* filter, const char* title);
 int saveFileDialog(char* outPath, const char* filter, const char* title);
 void generatePredictions(char* predictionfilename, char* traversalfilename, Segment* segments);
@@ -29,23 +29,22 @@ void selectPredictionOutputFile(char* predictionfilename);
 int main(void) {	
 	// Drive segment dictionary
 	Segment segments[NUM_SEGMENTS] = {
-		// 1. 13th & Marine → Taylor Way
+		// 1. 13th & Marine > Taylor Way
 		{1, 49.3260, -123.1516, 49.3283, -123.1340},
 
-		// 2. Taylor Way → Lions Gate Bridge
-		// entry moved slightly east of segment 1 exit
+		// 2. Taylor Way > Lions Gate Bridge
 		{2, 49.3239, -123.1335, 49.3278, -123.1290},
 
 		// 3. Lions Gate Bridge
 		{3, 49.3117, -123.1429, 49.3238, -123.1308},
 
-		// 4. Causeway → Denman
+		// 4. Causeway > Denman
 		{4, 49.2925, -123.1518, 49.3117, -123.1333},
 
-		// 5. Denman → Pacific
+		// 5. Denman > Pacific
 		{5, 49.2868, -123.1425, 49.2924, -123.1332},
 
-		// 6. Pacific → Burrard St Bridge
+		// 6. Pacific > Burrard St Bridge
 		{6, 49.2766, -123.1430, 49.2867, -123.1320},
 
 		// 7. Burrard Bridge
@@ -54,10 +53,10 @@ int main(void) {
 		// 8. Cornwall
 		{8, 49.2721, -123.1634, 49.2732, -123.1468},
 
-		// 9. Macdonald → W 4th
+		// 9. Macdonald > W 4th
 		{9, 49.2680, -123.1692, 49.2729, -123.1637},
 
-		// 10. W 4th → Blanca
+		// 10. W 4th > Blanca
 		{10, 49.2671, -123.2165, 49.2693, -123.1698},
 
 		// 11. Chancellor Blvd
@@ -87,7 +86,7 @@ int main(void) {
 
 		printf("Enter choice: ");
 		if (scanf("%d", &choice) != 1) {
-			clearInputBuffer();  // handles bad input like letters
+			clearInputBuffer();  // handles bad input
 			continue;
 		}
 
@@ -359,7 +358,7 @@ void generatePredictionSet(char* predictionfilename, char* traversalfilename, Se
 }
 
 void printMenu() {
-	printf("=== Traffic Forecasting ESP Data Processor ===\n");
+	printf("{ Traffic Forecasting ESP Data Processor }\n");
 	printf("1. Select ESP Data File\n");
 	printf("2. Select Output Traversal File\n");
 	printf("3. Select Output Prediction File\n");
@@ -393,9 +392,9 @@ int openFileDialog(char* outPath, const char* filter, const char* title) {
 	ofn.lpstrFile = outPath;
 	ofn.nMaxFile = MAX_PATH;
 
-	// 👇 Show all files by default, still allow CSV filter as an option
+	// Show all files by default, still allow CSV filter as an option
 	ofn.lpstrFilter = "All Files\0*.*\0CSV Files\0*.csv\0";
-	ofn.nFilterIndex = 1; // Selects "All Files" by default
+	ofn.nFilterIndex = 1; // Selects "all files" by default
 
 	ofn.lpstrTitle = title;
 	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
@@ -411,11 +410,12 @@ int saveFileDialog(char* outPath, const char* filter, const char* title) {
 	ofn.lpstrFile = outPath;
 	ofn.nMaxFile = MAX_PATH;
 
-	// 👇 All files first, CSV second
+	// All files first, CSV second
 	ofn.lpstrFilter = "All Files\0*.*\0CSV Files\0*.csv\0";
-	ofn.nFilterIndex = 1; // Selects "All Files" by default
+	ofn.nFilterIndex = 1; // Selects "all files" by default
 
 	ofn.lpstrTitle = title;
 	ofn.Flags = OFN_OVERWRITEPROMPT;
 	return GetSaveFileName(&ofn);
+
 }
