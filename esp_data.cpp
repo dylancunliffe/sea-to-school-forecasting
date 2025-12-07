@@ -72,7 +72,7 @@ int getESPData(FILE *filepointer, ESPDataPoint* data) {
 			// Convert time string to individual components
 			sscanf(timeStr, "%d:%d:%d", &tempHour, &tempMinute, &tempSecond);
 
-			tempHour -= TIME_OFFSET;               // Convert from UTC to local (UTC-7)
+			tempHour -= TIME_OFFSET;               // Convert from UTC to local time
 			if (tempHour < 0) tempHour += 24;      // Wrap around midnight
 			int totalSeconds = tempHour * 3600 + tempMinute * 60 + tempSecond;
 
@@ -86,7 +86,7 @@ int getESPData(FILE *filepointer, ESPDataPoint* data) {
 			ESPData[count].time = totalSeconds; // Convert time to seconds
 			count++;
 
-			// Print the read data point for verification (Remove or comment out later)
+			// Print the read data point for verification
 			printf("Read ESP data point %d: Lat: %f, Lon: %f, Speed: %f, Date: %04d-%02d-%02d, Time: %02d:%02d:%02d\n",
 				count,
 				ESPData[count - 1].lat,
@@ -115,7 +115,7 @@ int processPoint(ESPDataPoint* data, int startIndex, Segment* segments, int numS
 		if (data[startIndex].lat <= segments[j].max_lat && data[startIndex].lat >= segments[j].min_lat &&
 			data[startIndex].lon <= segments[j].max_lon && data[startIndex].lon >= segments[j].min_lon) {
 
-			// Check if previous point was outside → entry point
+			// Check if previous point was outside bounding zone
 			if (startIndex == 0 ||
 				!(data[startIndex - 1].lat <= segments[j].max_lat && data[startIndex - 1].lat >= segments[j].min_lat &&
 					data[startIndex - 1].lon <= segments[j].max_lon && data[startIndex - 1].lon >= segments[j].min_lon)) {
@@ -133,13 +133,13 @@ int processPoint(ESPDataPoint* data, int startIndex, Segment* segments, int numS
 
 						endIndex++;
 
-						// Safety guard: break if stuck near the end of the dataset
+						// Break if stuck near the end of the dataset
 						if (endIndex >= numPoints - 1)
 							break;
 					}
 
 					printf("Exited segment %d at index %d (duration: %.1f sec)\n", segments[j].segment_id, endIndex, duration);
-					return endIndex;  // return index after exiting segment ✅
+					return endIndex;  // return index after exiting segment
 				}
 			}
 		}
@@ -184,4 +184,5 @@ int recordTraversal (ValidTraversal* traversals, int* traversalCount, Segment* s
 	vt->startTime = dataPoint->time;
 	(*traversalCount)++;
 	return 0; // Successful recording
+
 }
