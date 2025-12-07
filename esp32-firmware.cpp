@@ -2,10 +2,10 @@
 #include <SPI.h>
 #include <TinyGPSPlus.h>
 
-static const int RXPin = 25, TXPin = 26;  // GPS
+static const int RXPin = 25, TXPin = 26;  // GPS pins
 static const uint32_t GPSBaud = 9600;
 
-// --- SD card default SPI pins ---
+// Default sd card pins
 #define SD_CS   5   // Chip Select
 #define SD_MISO 19  // Master In Slave Out
 #define SD_MOSI 23  // Master Out Slave In
@@ -30,7 +30,7 @@ void setup() {
   ss.begin(GPSBaud, SERIAL_8N1, RXPin, TXPin);
   Serial.println("GPS init successful.");
   
-  // Initialize SD card
+  // Init SD card
   if (!SD.begin(SD_CS, spiSD)) {
     Serial.println("SD card init failed!");
     return;
@@ -56,6 +56,7 @@ void loop() {
     Serial.write(c);
   }
 
+  // Open data file for writing
   File dataFile = SD.open("/gpsdata.txt", FILE_APPEND);
 
   if (dataFile) {
@@ -106,7 +107,7 @@ void loop() {
     dataFile.close();
     delay(1000);
 
-    // serial printing gps data for debugging
+    // Serial printing gps data for debugging
     if (gps.location.isValid()){
       Serial.print(gps.location.lat(), 6);
       Serial.print(" , ");
